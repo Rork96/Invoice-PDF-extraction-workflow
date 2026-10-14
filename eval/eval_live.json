@@ -1,0 +1,64 @@
+{
+  "source": "live n8n run (Gemini), Invoices sheet export",
+  "files": 8,
+  "fields": {
+    "invoice_number": {
+      "correct": 8,
+      "of": 8,
+      "accuracy_pct": 100.0
+    },
+    "vendor": {
+      "correct": 8,
+      "of": 8,
+      "accuracy_pct": 100.0
+    },
+    "issue_date": {
+      "correct": 8,
+      "of": 8,
+      "accuracy_pct": 100.0
+    },
+    "due_date": {
+      "correct": 8,
+      "of": 8,
+      "accuracy_pct": 100.0
+    },
+    "currency": {
+      "correct": 8,
+      "of": 8,
+      "accuracy_pct": 100.0
+    },
+    "subtotal": {
+      "correct": 8,
+      "of": 8,
+      "accuracy_pct": 100.0
+    },
+    "tax": {
+      "correct": 8,
+      "of": 8,
+      "accuracy_pct": 100.0
+    },
+    "total": {
+      "correct": 8,
+      "of": 8,
+      "accuracy_pct": 100.0
+    },
+    "line_item_count": {
+      "correct": 8,
+      "of": 8,
+      "accuracy_pct": 100.0
+    }
+  },
+  "routing": {
+    "correct": 8,
+    "of": 8
+  },
+  "failure_code": {
+    "correct": 0,
+    "of": 0
+  },
+  "all_fields": {
+    "correct": 72,
+    "of": 72
+  },
+  "mismatches": []
+}

@@ -1,0 +1,102 @@
+{
+  "total": 16,
+  "passed": 16,
+  "tests": [
+    {
+      "name": "recorded:invoice_01.pdf",
+      "expect": "PASS",
+      "got": "PASS",
+      "passed": true
+    },
+    {
+      "name": "recorded:invoice_02.pdf",
+      "expect": "PASS",
+      "got": "PASS",
+      "passed": true
+    },
+    {
+      "name": "recorded:invoice_03.pdf",
+      "expect": "PASS",
+      "got": "PASS",
+      "passed": true
+    },
+    {
+      "name": "recorded:invoice_04.pdf",
+      "expect": "PASS",
+      "got": "PASS",
+      "passed": true
+    },
+    {
+      "name": "recorded:invoice_05.pdf",
+      "expect": "TOTAL_MISMATCH",
+      "got": "TOTAL_MISMATCH(subtotal+tax=1272.60, total=1372.60)",
+      "passed": true
+    },
+    {
+      "name": "recorded:invoice_06.pdf",
+      "expect": "PASS",
+      "got": "PASS",
+      "passed": true
+    },
+    {
+      "name": "recorded:invoice_07.pdf",
+      "expect": "PASS",
+      "got": "PASS",
+      "passed": true
+    },
+    {
+      "name": "recorded:invoice_08.pdf",
+      "expect": "MISSING_INVOICE_NUMBER",
+      "got": "MISSING_INVOICE_NUMBER",
+      "passed": true
+    },
+    {
+      "name": "recorded:invoice_09.pdf",
+      "expect": "PASS",
+      "got": "PASS",
+      "passed": true
+    },
+    {
+      "name": "recorded:invoice_10.pdf",
+      "expect": "PASS",
+      "got": "PASS",
+      "passed": true
+    },
+    {
+      "name": "mutation:hallucinated_invoice_number",
+      "expect": "NOT_IN_SOURCE_INVOICE_NUMBER",
+      "got": "NOT_IN_SOURCE_INVOICE_NUMBER",
+      "passed": true
+    },
+    {
+      "name": "mutation:total_off_by_one_euro",
+      "expect": "TOTAL_MISMATCH",
+      "got": "TOTAL_MISMATCH(subtotal+tax=937.86, total=938.86); NOT_IN_SOURCE_TOTAL",
+      "passed": true
+    },
+    {
+      "name": "mutation:currency_not_allowed",
+      "expect": "CURRENCY",
+      "got": "CURRENCY_NOT_ALLOWED:XYZ",
+      "passed": true
+    },
+    {
+      "name": "mutation:bad_date",
+      "expect": "DATE",
+      "got": "BAD_ISSUE_DATE",
+      "passed": true
+    },
+    {
+      "name": "mutation:line_amount_wrong",
+      "expect": "LINE",
+      "got": "LINE_1_AMOUNT_NE_QTY_X_PRICE; LINES_SUM_NE_SUBTOTAL",
+      "passed": true
+    },
+    {
+      "name": "mutation:missing_key",
+      "expect": "SCHEMA_KEYS_MISSING",
+      "got": "SCHEMA_KEYS_MISSING:tax",
+      "passed": true
+    }
+  ]
+}

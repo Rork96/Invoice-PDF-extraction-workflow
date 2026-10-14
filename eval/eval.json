@@ -1,0 +1,64 @@
+{
+  "source": "mock-replay: recorded LLM outputs -> app/code/validate.js",
+  "files": 10,
+  "fields": {
+    "invoice_number": {
+      "correct": 10,
+      "of": 10,
+      "accuracy_pct": 100.0
+    },
+    "vendor": {
+      "correct": 10,
+      "of": 10,
+      "accuracy_pct": 100.0
+    },
+    "issue_date": {
+      "correct": 10,
+      "of": 10,
+      "accuracy_pct": 100.0
+    },
+    "due_date": {
+      "correct": 10,
+      "of": 10,
+      "accuracy_pct": 100.0
+    },
+    "currency": {
+      "correct": 10,
+      "of": 10,
+      "accuracy_pct": 100.0
+    },
+    "subtotal": {
+      "correct": 10,
+      "of": 10,
+      "accuracy_pct": 100.0
+    },
+    "tax": {
+      "correct": 10,
+      "of": 10,
+      "accuracy_pct": 100.0
+    },
+    "total": {
+      "correct": 10,
+      "of": 10,
+      "accuracy_pct": 100.0
+    },
+    "line_item_count": {
+      "correct": 10,
+      "of": 10,
+      "accuracy_pct": 100.0
+    }
+  },
+  "routing": {
+    "correct": 10,
+    "of": 10
+  },
+  "failure_code": {
+    "correct": 2,
+    "of": 2
+  },
+  "all_fields": {
+    "correct": 90,
+    "of": 90
+  },
+  "mismatches": []
+}
