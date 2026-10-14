@@ -1,0 +1,30 @@
+{
+ "vendor": "Draxon Mapleleaf Supply",
+ "invoice_number": null,
+ "issue_date": "2026-08-15",
+ "due_date": "2026-09-14",
+ "currency": "CAD",
+ "subtotal": 1641.43,
+ "tax": 82.07,
+ "total": 1723.5,
+ "line_items": [
+  {
+   "description": "line 1",
+   "qty": 1,
+   "unit_price": 0,
+   "amount": null
+  },
+  {
+   "description": "line 2",
+   "qty": 1,
+   "unit_price": 0,
+   "amount": null
+  },
+  {
+   "description": "line 3",
+   "qty": 1,
+   "unit_price": 0,
+   "amount": null
+  }
+ ]
+}

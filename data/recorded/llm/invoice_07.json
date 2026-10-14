@@ -1,0 +1,42 @@
+{
+ "vendor": "Pellwick Brineworks",
+ "invoice_number": "PB-100236",
+ "issue_date": "2026-07-09",
+ "due_date": "2026-08-08",
+ "currency": "USD",
+ "subtotal": 701.3,
+ "tax": 43.83,
+ "total": 745.13,
+ "line_items": [
+  {
+   "description": "Sea salt, coarse 25kg",
+   "qty": 8,
+   "unit_price": 31.4,
+   "amount": 251.2
+  },
+  {
+   "description": "Smoked salt 5kg",
+   "qty": 4,
+   "unit_price": 42.1,
+   "amount": 168.4
+  },
+  {
+   "description": "Pickling brine concentrate 10L",
+   "qty": 6,
+   "unit_price": 27.95,
+   "amount": 167.7
+  },
+  {
+   "description": "Pallet wrap",
+   "qty": 5,
+   "unit_price": 9.8,
+   "amount": 49
+  },
+  {
+   "description": "Delivery",
+   "qty": 1,
+   "unit_price": 65,
+   "amount": 65
+  }
+ ]
+}

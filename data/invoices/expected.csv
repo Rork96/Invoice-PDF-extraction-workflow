@@ -1,0 +1,11 @@
+file,layout,invoice_number,vendor_name,customer_name,invoice_date,due_date,currency,line_item_count,subtotal,tax_rate_pct,tax_amount,total,printed_total,problem
+invoice_01.pdf,A,ZLW-2026-0147,Zorvex Lumenworks Ltd,Bellmarrow Print House,2026-01-12,2026-02-11,USD,3,876.50,7,61.36,937.86,937.86,
+invoice_02.pdf,B,QTC-30918,Quillmere Tooling Co.,Thistlewick Bakery Collective,2026-02-14,2026-02-28,CAD,1,1480.00,5,74.00,1554.00,1554.00,
+invoice_03.pdf,C,NA-0000412,Nolvane Analytics GmbH,Havelmoor Logistik AG,2026-03-14,2026-04-13,EUR,6,9314.70,19,1769.79,11084.49,11084.49,
+invoice_04.pdf,B,OPS-7781,Ostrel Pixel Studio,Juniper & Quarry Outfitters,2026-03-28,2026-04-12,USD,2,2750.00,0,0.00,2750.00,2750.00,
+invoice_05.pdf,A,KGH/2026/055,Kyrrow Greenhouses Inc.,Applegarth Community Kitchen,2026-05-21,2026-06-20,CAD,3,1212.00,5,60.60,1272.60,1372.60,total_mismatch
+invoice_06.pdf,C,TC-20260602-9,Tavimor Cloudware,Mirelle Archives SARL,2026-06-02,2026-06-23,EUR,4,937.98,7,65.66,1003.64,1003.64,
+invoice_07.pdf,A,PB-100236,Pellwick Brineworks,Corvane Diner Group,2026-07-09,2026-08-08,USD,5,701.30,6.25,43.83,745.13,745.13,
+invoice_08.pdf,B,,Draxon Mapleleaf Supply,Sunnybrook Roofing Crew,2026-08-15,2026-09-14,CAD,3,1641.43,5,82.07,1723.50,1723.50,missing_invoice_number
+invoice_09.pdf,C,FA-2026-1203,Fennivale Audio SARL,Studio Orlenne,2026-09-03,2026-09-13,EUR,2,1319.00,21,276.99,1595.99,1595.99,
+invoice_10.pdf,B,2026-INV-000873,Brantavo Freight Partners,Lowmere Hardware Co-op,2026-09-30,2026-11-14,USD,6,4559.60,8.5,387.57,4947.17,4947.17,

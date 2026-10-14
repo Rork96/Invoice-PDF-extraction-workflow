@@ -1,0 +1,24 @@
+{
+ "vendor": "FENNIVALE AUDIO SARL",
+ "invoice_number": "FA-2026-1203",
+ "issue_date": "2026-09-03",
+ "due_date": "2026-09-13",
+ "currency": "EUR",
+ "subtotal": 1319.0,
+ "tax": 276.99,
+ "total": 1595.99,
+ "line_items": [
+  {
+   "description": "Condenser microphone, matched pair",
+   "qty": 1,
+   "unit_price": 1190,
+   "amount": 1190
+  },
+  {
+   "description": "Shock mount",
+   "qty": 2,
+   "unit_price": 64.5,
+   "amount": 129
+  }
+ ]
+}

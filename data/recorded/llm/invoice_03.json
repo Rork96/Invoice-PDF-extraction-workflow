@@ -1,0 +1,48 @@
+{
+ "vendor": "NOLVANE ANALYTICS GMBH",
+ "invoice_number": "NA-0000412",
+ "issue_date": "2026-03-14",
+ "due_date": "2026-04-13",
+ "currency": "EUR",
+ "subtotal": 9314.7,
+ "tax": 1769.79,
+ "total": 11084.49,
+ "line_items": [
+  {
+   "description": "Data pipeline audit",
+   "qty": 1,
+   "unit_price": 4200,
+   "amount": 4200
+  },
+  {
+   "description": "Dashboard design (days)",
+   "qty": 3,
+   "unit_price": 780,
+   "amount": 2340
+  },
+  {
+   "description": "Quarterly KPI report",
+   "qty": 2,
+   "unit_price": 650,
+   "amount": 1300
+  },
+  {
+   "description": "Training workshop (half-day)",
+   "qty": 1,
+   "unit_price": 900,
+   "amount": 900
+  },
+  {
+   "description": "Cloud sandbox hosting (month)",
+   "qty": 3,
+   "unit_price": 129.9,
+   "amount": 389.7
+  },
+  {
+   "description": "Travel flat fee",
+   "qty": 1,
+   "unit_price": 185,
+   "amount": 185
+  }
+ ]
+}

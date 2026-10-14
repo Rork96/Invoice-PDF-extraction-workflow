@@ -1,0 +1,30 @@
+{
+ "vendor": "Kyrrow Greenhouses Inc.",
+ "invoice_number": "KGH/2026/055",
+ "issue_date": "2026-05-21",
+ "due_date": "2026-06-20",
+ "currency": "CAD",
+ "subtotal": 1212.0,
+ "tax": 60.6,
+ "total": 1372.6,
+ "line_items": [
+  {
+   "description": "line 1",
+   "qty": 1,
+   "unit_price": 0,
+   "amount": null
+  },
+  {
+   "description": "line 2",
+   "qty": 1,
+   "unit_price": 0,
+   "amount": null
+  },
+  {
+   "description": "line 3",
+   "qty": 1,
+   "unit_price": 0,
+   "amount": null
+  }
+ ]
+}

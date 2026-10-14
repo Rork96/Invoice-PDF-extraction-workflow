@@ -1,0 +1,24 @@
+{
+ "vendor": "Ostrel Pixel Studio",
+ "invoice_number": "OPS-7781",
+ "issue_date": "2026-03-28",
+ "due_date": "2026-04-12",
+ "currency": "USD",
+ "subtotal": 2750.0,
+ "tax": 0.0,
+ "total": 2750.0,
+ "line_items": [
+  {
+   "description": "Brand identity package",
+   "qty": 1,
+   "unit_price": 2400,
+   "amount": 2400
+  },
+  {
+   "description": "Social media template pack",
+   "qty": 1,
+   "unit_price": 350,
+   "amount": 350
+  }
+ ]
+}

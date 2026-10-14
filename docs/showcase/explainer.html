@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Invoice to Sheet - 40s explainer</title>
+<style>
+:root{--ink:#0f172a;--paper:#f8fafc;--teal:#0d9488;--amber:#d97706;--g1:#e2e8f0;--g2:#94a3b8;--g3:#475569;--card:#ffffff}
+*{box-sizing:border-box;margin:0}
+html,body{background:#e8edf3;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink)}
+.wrap{max-width:1280px;margin:0 auto;padding:16px}
+#frame{position:relative;width:100%;overflow:hidden;border-radius:14px;background:var(--paper);box-shadow:0 8px 30px rgba(15,23,42,.18)}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;background:var(--paper);overflow:hidden}
+.bar{display:flex;align-items:center;gap:14px;margin-top:12px}
+button{font:inherit;font-weight:600;padding:10px 20px;border-radius:10px;border:2px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer}
+button:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.hint{color:var(--g3);font-size:14px}
+.abs{position:absolute}
+.sc{position:absolute;inset:0;opacity:0}
+.cap{position:absolute;left:120px;right:120px;top:90px;font-size:56px;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+.cap small{display:block;font-size:30px;font-weight:500;color:var(--g3);margin-top:14px;letter-spacing:0}
+.pdf{position:absolute;width:260px;height:340px;background:var(--card);border:2px solid var(--g1);border-radius:10px;box-shadow:0 10px 24px rgba(15,23,42,.12);padding:22px}
+.pdf i{display:block;height:10px;background:var(--g1);border-radius:5px;margin-bottom:14px}
+.pdf i.h{height:16px;background:var(--g2);width:55%}
+.pdf i.s{width:70%}
+.pdf b{position:absolute;bottom:14px;left:22px;font-size:16px;color:var(--g3);font-weight:600}
+.sheet{position:absolute;left:1000px;top:380px;width:800px;background:var(--card);border:2px solid var(--g1);border-radius:12px;overflow:hidden;box-shadow:0 10px 24px rgba(15,23,42,.1)}
+.row{display:grid;grid-template-columns:330px 250px 220px;height:76px;border-bottom:1px solid var(--g1);font-size:26px}
+.row:first-child{background:var(--ink);color:#fff;font-weight:600;height:64px}
+.row div{padding:20px 18px;white-space:nowrap;overflow:hidden;border-right:1px solid var(--g1)}
+.row:first-child div{border-color:#334155;padding:15px 18px}
+.row div.bad{background:#fef3c7;color:var(--amber);font-weight:700}
+.chip{position:absolute;padding:14px 30px;border-radius:999px;font-size:34px;font-weight:700;background:var(--ink);color:#fff}
+.chip.t{background:var(--teal)}.chip.a{background:var(--amber)}
+.lay{position:absolute;width:300px;height:400px;background:var(--card);border:2px solid var(--g1);border-radius:12px;box-shadow:0 10px 24px rgba(15,23,42,.12);padding:26px}
+.lay i{display:block;height:10px;background:var(--g1);border-radius:5px;margin-bottom:14px}
+.lay i.h{height:20px;background:var(--g2);width:50%}
+.lay .cols{display:flex;gap:12px}.lay .cols i{flex:1}
+.lay .tbl{border:2px solid var(--g1);border-radius:6px;height:120px;margin:18px 0;background:repeating-linear-gradient(var(--card) 0 22px,var(--g1) 22px 24px)}
+.lay em{position:absolute;bottom:-52px;left:0;right:0;text-align:center;font-style:normal;font-size:28px;font-weight:700;color:var(--g3)}
+.folder{position:absolute;left:1400px;top:300px;width:420px;height:560px;border:3px dashed var(--g2);border-radius:20px;background:rgba(226,232,240,.5)}
+.folder h4{position:absolute;top:-52px;left:0;font-size:32px;color:var(--g3)}
+.ftile{position:absolute;width:190px;height:50px;border-radius:10px;background:var(--card);border:2px solid var(--g1);font-size:20px;font-weight:600;padding:12px 14px;color:var(--ink)}
+.node{position:absolute;top:300px;width:200px;height:150px;background:var(--card);border:3px solid var(--ink);border-radius:18px;padding:18px 16px;box-shadow:0 8px 20px rgba(15,23,42,.1)}
+.node b{display:block;font-size:26px;line-height:1.1}.node span{display:block;margin-top:8px;font-size:19px;color:var(--g3)}
+.node u{position:absolute;top:-18px;left:-14px;width:36px;height:36px;border-radius:50%;background:var(--ink);color:#fff;text-decoration:none;text-align:center;line-height:36px;font-weight:700;font-size:20px}
+.node.tl{border-color:var(--teal)}.node.tl u{background:var(--teal)}
+.node.am{border-color:var(--amber);top:740px;width:240px}.node.am u{background:var(--amber)}
+.line{position:absolute;height:5px;background:var(--g2);transform-origin:0 50%;border-radius:3px}
+.dot{position:absolute;width:30px;height:30px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 8px rgba(13,148,136,.2)}
+.dot.a{background:var(--amber);box-shadow:0 0 0 8px rgba(217,119,6,.22)}
+.json{position:absolute;top:500px;width:240px;background:var(--ink);color:#cbd5e1;border-radius:14px;padding:16px 18px;font:600 20px/1.5 ui-monospace,Menlo,Consolas,monospace}
+.json div{opacity:.25}
+.checks{position:absolute;top:500px;width:300px;background:var(--card);border:2px solid var(--g1);border-radius:14px;padding:16px 18px;font-size:22px;font-weight:600;line-height:1.7}
+.checks div{opacity:0;color:var(--teal)}
+.tg{position:absolute;left:1380px;top:720px;width:460px;background:#fff;border:2px solid var(--g1);border-radius:18px;padding:22px 24px;font-size:22px;line-height:1.45;box-shadow:0 12px 28px rgba(15,23,42,.16)}
+.tg b{font-size:24px}.tg .r{color:var(--amber);font-weight:700}
+.tile{position:absolute;top:290px;width:400px;height:230px;background:var(--card);border:2px solid var(--g1);border-radius:20px;padding:28px;box-shadow:0 10px 24px rgba(15,23,42,.1)}
+.tile strong{display:block;white-space:nowrap;font-size:88px;line-height:1;letter-spacing:-.03em;color:var(--teal)}
+.tile.am strong{color:var(--amber)}
+.tile span{display:block;margin-top:14px;font-size:28px;color:var(--g3);font-weight:600}
+.fcell{position:absolute;width:540px;height:100px;background:var(--card);border:2px solid var(--g1);border-radius:14px;padding:16px 22px;font-size:26px;font-weight:600}
+.fcell em{position:absolute;right:22px;top:16px;font-style:normal;color:var(--teal);font-weight:700}
+.fcell .bg{position:absolute;left:22px;right:22px;bottom:16px;height:12px;background:var(--g1);border-radius:6px;overflow:hidden}
+.fcell .bg i{display:block;height:100%;width:100%;background:var(--teal);transform-origin:0 50%;transform:scaleX(0)}
+.title5{position:absolute;left:0;right:0;top:330px;text-align:center;font-size:170px;font-weight:800;letter-spacing:-.04em}
+.title5 em{font-style:normal;color:var(--teal)}
+.stack5{position:absolute;left:0;right:0;top:600px;text-align:center;font-size:44px;font-weight:600;color:var(--g3)}
+.foot5{position:absolute;left:0;right:0;top:760px;text-align:center;font-size:34px;font-weight:600}
+.foot5 span{display:inline-block;padding:12px 26px;border-radius:999px;margin:0 8px}
+.foot5 .a{background:var(--ink);color:#fff}.foot5 .b{background:var(--teal);color:#fff}
+.cur{display:inline-block;width:3px;height:1em;background:var(--ink);vertical-align:-3px;margin-left:2px}
+@media (prefers-reduced-motion:reduce){.cur{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="frame"><div id="stage" aria-label="Animated explainer: Invoice to Sheet automation" role="img">
+
+    <!-- Scene 1: problem -->
+    <div class="sc" id="s1">
+      <div class="cap">Invoices arrive as PDFs.<small>Someone retypes each one into a spreadsheet.</small></div>
+      <div id="pdfs"></div>
+      <div class="sheet" id="sheet1"></div>
+    </div>
+
+    <!-- Scene 2: input -->
+    <div class="sc" id="s2">
+      <div class="cap">Input: 10 synthetic invoices<small>3 layouts &middot; USD / CAD / EUR</small></div>
+      <div id="lays"></div>
+      <div id="chips"></div>
+      <div class="folder" id="folder"><h4>Inbox</h4></div>
+      <div id="ftiles"></div>
+    </div>
+
+    <!-- Scene 3: pipeline -->
+    <div class="sc" id="s3">
+      <div class="cap" style="height:150px">
+        <div class="abs" id="c3a" style="left:0">1 &middot; A new PDF lands in Inbox, gets downloaded<small>Google Drive trigger &rarr; download</small></div>
+        <div class="abs" id="c3b" style="left:0">2 &middot; Text is extracted, Gemini returns strict JSON<small>9 fields, null instead of guessing</small></div>
+        <div class="abs" id="c3c" style="left:0">3 &middot; Validate before anything is written<small>subtotal + tax = total &middot; required fields &middot; values must appear in the PDF</small></div>
+        <div class="abs" id="c3d" style="left:0;color:var(--amber)">Failure path: invoice_05<small style="color:var(--g3)">Blocked, sent to Needs review, Telegram alert fires</small></div>
+      </div>
+      <div id="nodes"></div>
+      <div id="lines"></div>
+      <div class="json" id="json"></div>
+      <div class="checks" id="checks"></div>
+      <div class="node am" id="rev" style="left:1090px"><u>!</u><b>Needs review</b><span>sheet row + file moved</span></div>
+      <div class="tg" id="tg"><b>Invoice needs review</b><br>File: invoice_05.pdf<br><span class="r">Reason: TOTAL_MISMATCH(subtotal+tax=1272.60, total=1372.60)</span></div>
+      <div class="dot" id="dotg"></div>
+      <div class="dot a" id="dota"></div>
+    </div>
+
+    <!-- Scene 4: result -->
+    <div class="sc" id="s4">
+      <div class="cap">Result on the test run<small>10 synthetic invoices, measured against the expected values</small></div>
+      <div id="tiles"></div>
+      <div id="fields"></div>
+    </div>
+
+    <!-- Scene 5: close -->
+    <div class="sc" id="s5">
+      <div class="title5">Invoice <em>&rarr;</em> Sheet</div>
+      <div class="stack5">n8n &middot; Google Drive &middot; Google Sheets &middot; Gemini &middot; Telegram</div>
+      <div class="foot5"><span class="a">Demo project &middot; synthetic data</span><span class="b">Available on Upwork</span></div>
+    </div>
+
+  </div></div>
+  <div class="bar"><button id="replay" type="button">Replay</button><span class="hint" id="hint"></span></div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var DUR=40;
+var clamp=function(x){return Math.min(1,Math.max(0,x))};
+var P=function(t,a,b){return clamp((t-a)/(b-a))};
+var outExpo=function(x){return x>=1?1:1-Math.pow(2,-10*x)};
+var outCubic=function(x){return 1-Math.pow(1-x,3)};
+var inOut=function(x){return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+var outBack=function(x){var c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+var lerp=function(a,b,x){return a+(b-a)*x};
+var kf=function(t,pts){ // piecewise eased interpolation
+  if(t<=pts[0][0])return pts[0][1];
+  for(var i=1;i<pts.length;i++){
+    if(t<=pts[i][0])return lerp(pts[i-1][1],pts[i][1],inOut(P(t,pts[i-1][0],pts[i][0])));
+  }
+  return pts[pts.length-1][1];
+};
+
+/* ---------- build DOM ---------- */
+function el(tag,cls,html,parent){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;if(parent)parent.appendChild(e);return e}
+
+// scene 1
+var pdfs=[];
+for(var i=0;i<5;i++){
+  var p=el('div','pdf','<i class="h"></i><i></i><i class="s"></i><i></i><i class="s"></i><i></i><b>invoice.pdf</b>',$('pdfs'));
+  p.dataset.x=130+i*34;p.dataset.y=360+i*26;p.dataset.r=(-6+i*3);
+  pdfs.push(p);
+}
+var sheet=$('sheet1');
+var rowsTxt=[['Zorvex Lumenworks Ltd','ZLW-2026-0147'],['Quillmere Tooling Co.','QTC-30918'],['Nolvane Analytics GmbH','NA-0000412'],['Ostrel Pixel Studio','OPS-7781']];
+el('div','row','<div>Vendor</div><div>Invoice #</div><div>Check</div>',sheet);
+var cells=[];
+rowsTxt.forEach(function(r){var row=el('div','row','<div></div><div></div><div></div>',sheet);cells.push(row.children)});
+
+// scene 2
+var layNames=['A','B','C'];
+layNames.forEach(function(n,i){
+  var h=n==='A'?'<i class="h"></i><i></i><i class="s"></i><div class="tbl"></div><i></i><i class="s"></i>':
+        n==='B'?'<div class="cols"><i class="h"></i><i></i></div><div class="tbl"></div><i></i><i></i><i class="s"></i>':
+                '<i></i><i class="h"></i><i class="s"></i><i></i><div class="tbl"></div><i class="s"></i>';
+  var l=el('div','lay',h+'<em>Layout '+n+'</em>',$('lays'));l.dataset.x=130+i*360;l.dataset.i=i;
+});
+var chips=[['USD','t'],['CAD',''],['EUR','a']].map(function(c,i){var e=el('div','chip '+c[1],c[0],$('chips'));e.dataset.x=220+i*280;return e});
+var ftiles=[];
+for(var i=0;i<10;i++){var f=el('div','ftile','invoice_'+(i<9?'0':'')+(i+1)+'.pdf',$('ftiles'));ftiles.push(f)}
+
+// scene 3
+var NX=function(i){return 110+i*250};
+var nodeDefs=[['Drive Trigger','new PDF in Inbox',12.0,''],['Download PDF','Google Drive',13.2,''],['Extract text','PDF to text',14.4,''],['Gemini','text to JSON',15.8,''],['Validate','3 rule checks',19.8,'tl'],['Google Sheets','append row',21.4,'tl'],['Processed','file moved',22.6,'tl']];
+var nodes=nodeDefs.map(function(d,i){var n=el('div','node '+d[3],'<u>'+(i+1)+'</u><b>'+d[0]+'</b><span>'+d[1]+'</span>',$('nodes'));n.style.left=NX(i)+'px';return n});
+var lines=[];
+for(var i=0;i<6;i++){var l=el('div','line','',$('lines'));l.style.left=(NX(i)+200)+'px';l.style.top='372px';l.style.width='50px';lines.push(l)}
+var revLine=el('div','line','',$('lines'));revLine.style.left=(NX(4)+100-2)+'px';revLine.style.top='450px';revLine.style.width='5px';revLine.style.height='290px';revLine.style.background='var(--amber)';revLine.style.transformOrigin='50% 0';
+var fieldNames=['vendor','invoice_number','issue_date','due_date','currency','subtotal','tax','total','line_items'];
+var json=$('json');json.style.left=NX(3)+'px';
+var jrows=[el('div','','{',json)];
+fieldNames.forEach(function(f){jrows.push(el('div','','&nbsp;&nbsp;'+f,json))});
+jrows.push(el('div','','}',json));
+var checks=$('checks');checks.style.left=NX(4)-50+'px';
+var chkRows=['subtotal + tax = total','required fields present','values found in PDF'].map(function(t){return el('div','','&#10003; '+t,checks)});
+
+// scene 4
+var tiles=[['files handled correctly',10,10,''],['field checks passed',90,90,''],['problem files caught',2,0,'am'],['rows in the Invoices sheet',8,0,'']].map(function(d,i){
+  var t=el('div','tile '+d[3],'<strong></strong><span>'+d[0]+'</span>',$('tiles'));t.style.left=(120+i*440)+'px';t.d=d;return t});
+var fcells=fieldNames.slice(0,8).concat(['line_item_count']).map(function(f,i){
+  var c=el('div','fcell',f+'<em>10/10</em><div class="bg"><i></i></div>',$('fields'));
+  c.style.left=(120+(i%3)*580)+'px';c.style.top=(570+Math.floor(i/3)*120)+'px';return c});
+
+/* ---------- scaling ---------- */
+var frame=$('frame'),stage=$('stage');
+function fit(){var w=frame.clientWidth,s=w/1920;stage.style.transform='scale('+s+')';frame.style.height=(1080*s)+'px'}
+window.addEventListener('resize',fit);fit();
+
+/* ---------- scene opacity ---------- */
+var SC=[[0,5],[5,12],[12,28],[28,36],[36,40.01]];
+var scs=[$('s1'),$('s2'),$('s3'),$('s4'),$('s5')];
+function scOp(t,i){
+  var a=SC[i][0],b=SC[i][1];
+  if(reduced)return (t>=a&&t<b)?1:0;
+  if(t<a||t>b)return 0;
+  var inn=i===0?1:P(t,a,a+.5),out=i===4?1:1-P(t,b-.5,b);
+  return Math.min(inn,out);
+}
+function setOp(e,v){e.style.opacity=v}
+function setTf(e,x,y,r,s){e.style.transform='translate('+x+'px,'+y+'px)'+(r?' rotate('+r+'deg)':'')+(s!=null?' scale('+s+')':'')}
+
+/* ---------- render(t) : pure function of time ---------- */
+function render(t){
+  for(var i=0;i<5;i++){scs[i].style.opacity=scOp(t,i);scs[i].style.visibility=scOp(t,i)>0?'visible':'hidden'}
+
+  // S1
+  pdfs.forEach(function(p,i){
+    var k=outExpo(P(t,.2+i*.35,.9+i*.35));
+    p.style.left=p.dataset.x+'px';p.style.top=p.dataset.y+'px';
+    p.style.opacity=clamp(k*3);
+    setTf(p,0,(1-k)*-700,+p.dataset.r);
+  });
+  var types=[[1.2,2.2],[2.2,3.2],[3.2,4.2],[4.2,4.9]];
+  for(var r=0;r<4;r++){
+    var cs=cells[r];
+    var a=P(t,types[r][0],types[r][0]+.6),b=P(t,types[r][0]+.5,types[r][1]);
+    var s0=rowsTxt[r][0],s1=rowsTxt[r][1];
+    cs[0].textContent=s0.slice(0,Math.round(s0.length*a));
+    cs[1].textContent=s1.slice(0,Math.round(s1.length*b));
+    if(r===2){
+      var bad=t>=3.7;cs[2].className=bad?'bad':'';cs[2].textContent=bad?'typo?':'';
+    }
+  }
+
+  // S2
+  $('lays').childNodes.forEach(function(l,i){
+    var k=outCubic(P(t,5.2+i*.3,6.4+i*.3));
+    l.style.left=l.dataset.x+'px';l.style.top='380px';
+    l.style.opacity=k;setTf(l,0,(1-k)*60,(i-1)*3*(1-k)*3);
+  });
+  chips.forEach(function(c,i){
+    var k=outBack(P(t,7+i*.5,7.6+i*.5));
+    c.style.left=c.dataset.x+'px';c.style.top='880px';
+    c.style.opacity=clamp(k*2);setTf(c,0,0,0,Math.max(.001,k));
+  });
+  var fk=outCubic(P(t,8.2,9));$('folder').style.opacity=fk;
+  ftiles.forEach(function(f,i){
+    var k=outCubic(P(t,8.8+i*.2,9.6+i*.2));
+    var ex=1430+(i%2)*200,ey=330+Math.floor(i/2)*100;
+    var sx=900,sy=560;
+    f.style.left=lerp(sx,ex,k)+'px';f.style.top=lerp(sy,ey,k)+'px';f.style.opacity=clamp(k*4);
+  });
+
+  // S3
+  var c3=[[12,16],[16,20],[20,24],[24,28]];
+  ['c3a','c3b','c3c','c3d'].forEach(function(id,i){
+    var a=c3[i][0],b=c3[i][1],v;
+    if(reduced)v=(t>=a&&t<b)?1:0;else v=Math.min(P(t,a,a+.4),1-P(t,b-.3,b));
+    if(i===3&&!reduced)v=P(t,a,a+.4);
+    $(id).style.opacity=v;$(id).style.top=(1-v)*14+'px';
+  });
+  nodes.forEach(function(n,i){
+    var k=outBack(P(t,nodeDefs[i][2],nodeDefs[i][2]+.5));
+    n.style.opacity=clamp(k*2);setTf(n,0,(1-clamp(k))*30,0,.92+.08*clamp(k));
+  });
+  lines.forEach(function(l,i){l.style.transform='scaleX('+inOut(P(t,nodeDefs[i+1][2]-.3,nodeDefs[i+1][2]))+')'});
+  // green dot path
+  var cx=function(i){return NX(i)+100};
+  var gx=kf(t,[[12.4,cx(0)],[13.4,cx(1)],[14.6,cx(2)],[16.2,cx(3)],[19.9,cx(3)],[20.6,cx(4)],[22.0,cx(5)],[23.0,cx(6)]]);
+  var gv=t<12.4?0:(t<23.2?1:1-P(t,23.2,23.7));
+  $('dotg').style.left=(gx-15)+'px';$('dotg').style.top=(300-15)+'px';$('dotg').style.opacity=reduced?(t>=12.4&&t<23.6?1:0):gv;
+  // json card
+  var jv=Math.min(P(t,16.2,16.7),1-P(t,19.4,19.9));$('json').style.opacity=reduced?(t>=16.2&&t<19.6?1:0):jv;
+  jrows.forEach(function(r,i){r.style.opacity=(i===0||i===jrows.length-1)?(.9):(t>=16.7+(i-1)*.28?1:.25);r.style.color=(i>0&&i<jrows.length-1&&t>=16.7+(i-1)*.28)?'#5eead4':''});
+  // checks
+  var cv=Math.min(P(t,20.1,20.5),reduced?1:1);$('checks').style.opacity=reduced?(t>=20.1?1:0):cv;
+  chkRows.forEach(function(r,i){
+    var on=t>=20.5+i*.55;r.style.opacity=on?1:0;
+    if(i===0&&t>=24.8){r.innerHTML='&#10007; subtotal + tax &ne; total';r.style.color='var(--amber)'}
+    else if(i===0){r.innerHTML='&#10003; subtotal + tax = total';r.style.color='var(--teal)'}
+  });
+  // amber path
+  var ak=inOut(P(t,24.2,25.4));
+  var av=t<24.1?0:1;
+  $('dota').style.left=(cx(4)-15)+'px';$('dota').style.top=lerp(450-15,740-15,ak)+'px';$('dota').style.opacity=av;
+  revLine.style.transform='scaleY('+ak+')';
+  var rv=outBack(P(t,25.0,25.7));$('rev').style.opacity=clamp(rv*2);
+  var tk=outCubic(P(t,25.9,26.7));$('tg').style.opacity=tk;$('tg').style.transform='translateX('+((1-tk)*140)+'px)';
+
+  // S4
+  tiles.forEach(function(tl,i){
+    var k=outCubic(P(t,28.6+i*.18,29.3+i*.18));tl.style.opacity=k;setTf(tl,0,(1-k)*40);
+    var cnt=outCubic(P(t,28.9+i*.18,31.2+i*.18));var v=Math.round(tl.d[1]*cnt);
+    tl.firstChild.textContent=tl.d[2]?v+' / '+tl.d[2]:String(v);
+  });
+  fcells.forEach(function(c,i){
+    var k=outCubic(P(t,31.4+i*.2,32+i*.2));c.style.opacity=k;setTf(c,0,(1-k)*30);
+    c.querySelector('i').style.transform='scaleX('+outCubic(P(t,31.6+i*.2,32.8+i*.2))+')';
+  });
+
+  // S5 handled by scene opacity; subtle rise
+  var s5=P(t,36.1,37);[].forEach.call(scs[4].children,function(c,i){var k=outCubic(P(t,36.1+i*.25,37+i*.25));c.style.opacity=k;c.style.transform='translateY('+((1-k)*30)+'px)'});
+}
+
+/* ---------- player ---------- */
+var raf=null,t0=0,stepTimer=null;
+function stop(){if(raf)cancelAnimationFrame(raf);raf=null;if(stepTimer)clearInterval(stepTimer);stepTimer=null}
+function playSmooth(){
+  stop();t0=performance.now();
+  (function loop(now){
+    var t=Math.min(DUR,(now-t0)/1000);render(t);
+    if(t<DUR)raf=requestAnimationFrame(loop);else raf=null;
+  })(t0);
+}
+function playStepped(){ // prefers-reduced-motion: cuts, no movement
+  stop();var seq=[4.9,11.9,27.9,35.9,40],i=0;render(seq[0]);
+  stepTimer=setInterval(function(){i++;if(i>=seq.length){clearInterval(stepTimer);stepTimer=null;return}render(seq[i])},3500);
+}
+function play(){reduced?playStepped():playSmooth()}
+$('replay').addEventListener('click',play);
+
+var q=new URLSearchParams(location.search);
+if(q.has('t')){render(Math.min(DUR,parseFloat(q.get('t'))||0));$('hint').textContent='frame '+q.get('t')+'s'}
+else if(reduced){render(DUR);$('hint').textContent='Reduced motion is on: Replay steps through scenes without movement.'}
+else{play()}
+})();
+</script>
+</body>
+</html>

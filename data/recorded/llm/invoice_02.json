@@ -1,0 +1,18 @@
+{
+ "vendor": "Quillmere Tooling Co.",
+ "invoice_number": "QTC-30918",
+ "issue_date": "2026-02-14",
+ "due_date": "2026-02-28",
+ "currency": "CAD",
+ "subtotal": 1480.0,
+ "tax": 74.0,
+ "total": 1554.0,
+ "line_items": [
+  {
+   "description": "Industrial dough sheeter service call",
+   "qty": 1,
+   "unit_price": 1480,
+   "amount": 1480
+  }
+ ]
+}

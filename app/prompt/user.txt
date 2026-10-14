@@ -1,0 +1,20 @@
+Extract the invoice data from the text between the invoice_text tags.
+
+OUTPUT SCHEMA (all 9 keys always present, exact names):
+{
+  "vendor": string|null,
+  "invoice_number": string|null,
+  "issue_date": "YYYY-MM-DD"|null,
+  "due_date": "YYYY-MM-DD"|null,
+  "currency": "ISO 4217 code, 3 uppercase letters"|null,
+  "subtotal": number|null,
+  "tax": number|null,
+  "total": number|null,
+  "line_items": [ { "description": string|null, "qty": number|null, "unit_price": number|null, "amount": number|null } ]
+}
+
+<invoice_text>
+{{ $json.text }}
+</invoice_text>
+
+Return only the JSON object.

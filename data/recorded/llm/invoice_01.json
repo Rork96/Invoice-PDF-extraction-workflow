@@ -1,0 +1,30 @@
+{
+ "vendor": "Zorvex Lumenworks Ltd",
+ "invoice_number": "ZLW-2026-0147",
+ "issue_date": "2026-01-12",
+ "due_date": "2026-02-11",
+ "currency": "USD",
+ "subtotal": 876.5,
+ "tax": 61.36,
+ "total": 937.86,
+ "line_items": [
+  {
+   "description": "LED panel 60x60, warm white",
+   "qty": 12,
+   "unit_price": 38.5,
+   "amount": 462
+  },
+  {
+   "description": "Mounting bracket set",
+   "qty": 12,
+   "unit_price": 4.75,
+   "amount": 57
+  },
+  {
+   "description": "Installation labour (hrs)",
+   "qty": 6.5,
+   "unit_price": 55,
+   "amount": 357.5
+  }
+ ]
+}

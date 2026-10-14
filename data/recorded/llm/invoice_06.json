@@ -1,0 +1,36 @@
+{
+ "vendor": "TAVIMOR CLOUDWARE",
+ "invoice_number": "TC-20260602-9",
+ "issue_date": "2026-06-02",
+ "due_date": "2026-06-23",
+ "currency": "EUR",
+ "subtotal": 937.98,
+ "tax": 65.66,
+ "total": 1003.64,
+ "line_items": [
+  {
+   "description": "Team licence (seat/month)",
+   "qty": 14,
+   "unit_price": 22,
+   "amount": 308
+  },
+  {
+   "description": "Priority support plan",
+   "qty": 1,
+   "unit_price": 240,
+   "amount": 240
+  },
+  {
+   "description": "Onboarding session",
+   "qty": 1,
+   "unit_price": 350,
+   "amount": 350
+  },
+  {
+   "description": "Extra storage 500GB",
+   "qty": 2,
+   "unit_price": 19.99,
+   "amount": 39.98
+  }
+ ]
+}
